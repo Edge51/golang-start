@@ -1,0 +1,4 @@
+redis:
+  addr: "localhost:6379"
+mysql:
+  dsn: "root:@tcp(localhost:3306)/shorturl?parseTime=true"
