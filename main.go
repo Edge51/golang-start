@@ -1,16 +1,20 @@
 package main
 
 import (
-    "fmt"
-    "edge5134.com/notedge/internal/cache"
+	"fmt"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-    client := cache.New()
-    err := client.SetURL("test", "https://example.com")
-    if err != nil {
-        fmt.Println("失败原因:", err)
-    } else {
-        fmt.Println("✅ 成功写入Redis!")
-    }
+    app := gin.Default()
+    app.GET("/", func(ctx *gin.Context)  {
+        ctx.String(http.StatusOK, "hello gin!")
+        fmt.Println("hello is requested")
+    })
+    app.GET("/id/:id/hello", func(ctx *gin.Context)  {
+        ctx.JSON(http.StatusOK, gin.H{"requestId": ctx.Param("id"), "query": ctx.Query("name")})
+    })
+    app.Run(":3000")
 }
